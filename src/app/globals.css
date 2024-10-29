@@ -2,20 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@layer utilities {
+	.button {
+		@apply bg-black border border-white/10 px-6 py-2 text-base font-normal text-white 
+    hover:bg-[#0c0c0c] rounded-md smooth;
+	}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+	.smooth {
+		@apply transition-all ease-in-out duration-150;
+	}
 }
