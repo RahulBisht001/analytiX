@@ -49,14 +49,17 @@ const Header = () => {
                         <DropdownMenuTrigger className="text-white outline-none p-0 m-0 border-none font-Lexend font-normal">
                             <div className="flex space-x-2 items-center justify-center hover:opacity-50">
                                 <p className="text-base">{currentUser?.user_metadata?.full_name.split(" ")[0]}</p>
-                                <Image
-                                    src={currentUser?.user_metadata?.avatar_url}
-                                    alt="User Image"
-                                    width={30}
-                                    height={30}
-                                    aria-label="Profile image of the user"
-                                    className="rounded-full"
-                                />
+                                {currentUser && (
+                                    <Image
+                                        src={currentUser?.user_metadata?.avatar_url}
+                                        // src={"/images/google.png"}
+                                        alt="User Image"
+                                        width={30}
+                                        height={30}
+                                        aria-label="Profile image of the user"
+                                        className="rounded-full"
+                                    />
+                                )}
                             </div>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="bg-[#0a0a0a] border-white/5 outline-none text-white text-sm  font-Lexend font-light bg-opacity-20 backdrop-blur-md filter">
