@@ -6,11 +6,13 @@ import {useRouter} from "next/navigation";
 import GoogleLogo from "../../../public/images/google.png";
 import GithubLogo from "../../../public/images/github.png";
 
-import {createClient} from "../../utils/supabase/client";
-import type {User, SupabaseClient} from "@supabase/supabase-js";
+// import {createClient} from "../../utils/supabase/client";
+// import type {User, SupabaseClient} from "@supabase/supabase-js";
+import type {User} from "@supabase/supabase-js";
+import {supabase} from "@/config/SUPABASE_CLIENT";
 
 const Auth = () => {
-    const supabase: SupabaseClient = createClient();
+    // const supabase: SupabaseClient = createClient();
     const router = useRouter();
 
     useEffect(() => {
@@ -42,7 +44,7 @@ const Auth = () => {
 
     return (
         <>
-            <section className="bg-black text-white items-center justify-center flex gap-14 flex-col w-full min-h-screen font-outfit">
+            <section className="bg-black text-white items-center justify-center flex gap-14 flex-col w-full min-h-screen font-Lexend">
                 <header>
                     <h1 className="text-3xl">Howdy👋 from analytiX</h1>
                 </header>

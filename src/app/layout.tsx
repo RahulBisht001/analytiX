@@ -1,36 +1,23 @@
 import type {Metadata} from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 
-const outfit = localFont({
-    src: [
-        {
-            path: "./fonts/Outfit-Light.otf",
-            weight: "300",
-        },
-        {
-            path: "./fonts/Outfit-Regular.otf",
-            weight: "400",
-        },
-        {
-            path: "./fonts/Outfit-Medium.otf",
-            weight: "500",
-        },
-        {
-            path: "./fonts/Outfit-SemiBold.otf",
-            weight: "600",
-        },
-        {
-            path: "./fonts/Outfit-Bold.otf",
-            weight: "700",
-        },
-        {
-            path: "./fonts/Outfit-ExtraBold.otf",
-            weight: "800",
-        },
-    ],
-    variable: "--font-outfit",
-    weight: "100 900",
+import {Lexend, Poppins, Outfit} from "next/font/google";
+const lexend = Lexend({
+    subsets: ["latin"],
+    weight: ["100", "200", "300", "400", "500", "600", "700"],
+    variable: "--font-Lexend",
+});
+
+const poppins = Poppins({
+    subsets: ["latin"],
+    weight: ["100", "200", "300", "400", "500", "600", "700"],
+    variable: "--font-Poppins",
+});
+
+const outfit = Outfit({
+    subsets: ["latin"],
+    weight: ["100", "200", "300", "400", "500", "600", "700"],
+    variable: "--font-Outfit",
 });
 
 export const metadata: Metadata = {
@@ -45,7 +32,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${outfit.variable} antialiased`}>{children}</body>
+            <body className={`${outfit.variable} ${poppins.variable} ${lexend.variable} antialiased`}>{children}</body>
         </html>
     );
 }
