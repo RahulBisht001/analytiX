@@ -9,7 +9,7 @@ import type {User} from "@supabase/supabase-js";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {irBlack} from "react-syntax-highlighter/dist/esm/styles/hljs";
 
-import {Clipboard, ClipboardCheck} from "lucide-react";
+import {ArrowRight, Copy, Check} from "lucide-react";
 
 const AddPage = () => {
     const [step, setStep] = useState<number>(1);
@@ -66,7 +66,7 @@ const AddPage = () => {
         .single();
 
         if (error) {
-            console.error("Error checking domain:", error); // optional error handling
+            console.log("Error checking domain:", error); // optional error handling
             setError(error.message);
         }
 
@@ -196,7 +196,7 @@ const AddPage = () => {
                                         className="button absolute top-2 right-2 bg-transparent text-white !p-2 rounded focus:outline-none"
                                         aria-label="Copy code to clipboard"
                                     >
-                                        {isCopied ? <ClipboardCheck size={20} /> : <Clipboard size={20} />}
+                                        {isCopied ? <Check size={20} color="#1bee34" /> : <Copy size={20} />}
                                     </button>
                                     <SyntaxHighlighter
                                         language="javascript"
@@ -206,14 +206,21 @@ const AddPage = () => {
                                         {codeString}
                                     </SyntaxHighlighter>
 
-                                    <p className="text-xs text-white/20 font-light pt-2">
-                                        paste this snippet in the <b className="text-red-500">{"<head>"}</b> tag of the
-                                        your app.
+                                    <p className="text-xs text-white/30 font-light pt-2">
+                                        paste this snippet in the <strong className="text-red-600">{"<head>"}</strong>{" "}
+                                        tag of the your app.
                                     </p>
                                 </span>
 
-                                <button onClick={() => router.push(`/w/${website.trim()}`)} className="button">
-                                    added
+                                <button
+                                    onClick={() => router.push(`/w/${website.trim()}`)}
+                                    className="button flex gap-2 items-center group"
+                                >
+                                    <span>Check insights</span>
+                                    <ArrowRight
+                                        size={20}
+                                        className="transform transition-transform duration-200 group-hover:translate-x-1"
+                                    />
                                 </button>
                             </div>
                         </>
