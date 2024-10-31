@@ -4,12 +4,15 @@
 
 @layer utilities {
 	.button {
-		@apply bg-black border border-white/10 px-6 py-2 text-base text-white 
+		@apply bg-black border border-white/10 font-light px-6 py-2 text-base text-white 
     hover:bg-[#0c0c0c] rounded-md smooth;
 	}
 
 	.smooth {
 		@apply transition-all ease-in-out duration-150;
+	}
+	.input {
+		@apply outline-none border-b border-white/10 w-full font-light py-2 pr-4 placeholder:text-white/20 bg-transparent hover:border-white/50 smooth;
 	}
 }
 
