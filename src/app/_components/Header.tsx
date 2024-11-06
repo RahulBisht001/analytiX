@@ -3,7 +3,7 @@ import Image from "next/image";
 import {ArrowRightIcon} from "lucide-react";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator} from "@radix-ui/react-dropdown-menu";
-import useUser from "../hooks/useUser";
+import useUser from "../../hooks/useUser";
 import type {User} from "@supabase/supabase-js";
 import {supabase} from "@/config/SUPABASE_CLIENT";
 import {redirect, usePathname} from "next/navigation";
@@ -58,6 +58,7 @@ const Header = () => {
                                         height={30}
                                         aria-label="Profile image of the user"
                                         className="rounded-full"
+                                        unoptimized={true}
                                     />
                                 )}
                             </div>

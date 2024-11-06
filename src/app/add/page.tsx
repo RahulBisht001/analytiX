@@ -1,7 +1,7 @@
 "use client";
 import {ChangeEvent, useState, useEffect} from "react";
 import {redirect, useRouter} from "next/navigation";
-import useUser from "../hooks/useUser";
+import useUser from "../../hooks/useUser";
 
 import {supabase} from "@/config/SUPABASE_CLIENT";
 import type {User} from "@supabase/supabase-js";

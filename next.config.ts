@@ -3,9 +3,17 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
 	/* config options here */
 	images: {
-		domains: [
-			"lh3.googleusercontent.com", // Google user images
-			"avatars.githubusercontent.com", // GitHub user images
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "lh3.googleusercontent.com",
+				pathname: "/**",
+			},
+			{
+				protocol: "https",
+				hostname: "avatars.githubusercontent.com",
+				pathname: "/**",
+			},
 		],
 	},
 };
