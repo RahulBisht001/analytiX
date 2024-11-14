@@ -52,7 +52,7 @@ const config: Config = {
 				},
 			},
 			fontFamily: {
-				outfit: ["var(--font-Outfit)"],
+				Outfit: ["var(--font-Outfit)"],
 				Poppins: ["var(--font-Poppins)"],
 				Lexend: ["var(--font-Lexend)"],
 			},

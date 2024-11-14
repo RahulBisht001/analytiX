@@ -154,7 +154,7 @@ const WebsitePage = () => {
 
     return (
         <>
-            <main className="bg-black text-white min-h-screen w-full flex flex-grow flex-col items-center justify-center font-outfit">
+            <main className="bg-black text-white min-h-screen w-full flex flex-grow flex-col items-center justify-center font-Outfit">
                 <Header />
                 {loading ? (
                     <div className="w-full relative text-white flex flex-grow justify-center items-center">

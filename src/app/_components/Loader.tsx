@@ -3,7 +3,7 @@ import React from "react";
 const Loader = () => {
     return (
         <>
-            <section className="font-outfit flex flex-col gap-10 justify-center items-center">
+            <section className="font-Outfit flex flex-col gap-10 justify-center items-center">
                 {/* <svg
                     className="w-12 h-12 mr-2 animate-spin"
                     xmlns="http://www.w3.org/2000/svg"

@@ -24,7 +24,7 @@ const Header = () => {
 
     return (
         <>
-            <div className="w-full border-b border-white/5 sticky top-0 bg-black z-50 bg-opacity-20 filter backdrop:blur-lg flex items-center justify-between px-4 sm:px-10 py-4 font-outfit">
+            <div className="w-full border-b border-white/5 sticky top-0 bg-black z-50 bg-opacity-20 filter backdrop:blur-lg flex items-center justify-between px-4 sm:px-10 py-4 font-Outfit">
                 {/* logo of the website */}
                 <h1 className="text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend">.analytiX</h1>
 
@@ -46,7 +46,7 @@ const Header = () => {
                         </div>
                     )}
                     <DropdownMenu>
-                        <DropdownMenuTrigger className="text-white outline-none p-0 m-0 border-none font-outfit font-light">
+                        <DropdownMenuTrigger className="text-white outline-none p-0 m-0 border-none font-Outfit font-light">
                             <div className="flex space-x-2 items-center justify-center hover:opacity-50">
                                 <p className="text-base">{currentUser?.user_metadata?.full_name.split(" ")[0]}</p>
                                 {currentUser && (
