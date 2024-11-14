@@ -27,7 +27,7 @@
 
         if (!sessionId || !expirationTimestamp) {
             sessionId = generateSessionId();
-            expirationTimestamp = Date.now + 10 * 60 * 1000;
+            expirationTimestamp = Date.now() + 10 * 60 * 1000;
 
             localStorage.setItem("session_id", sessionId);
             localStorage.setItem("session_expiration_timestamp", expirationTimestamp);
@@ -67,6 +67,7 @@
             // language: navigator.language,
             // screen: screen.width + "x" + screen.height,
         };
+        console.log(payload);
 
         sendRequest(payload, options);
     }
@@ -104,6 +105,7 @@
     }
 
     function trackSessionStart() {
+        console.log("Session Start Trigger");
         trigger("session_start");
     }
     function trackSessionEnd() {

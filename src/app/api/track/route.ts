@@ -7,7 +7,7 @@ export const corsHeaders = {
 	"Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
-export async function OPTIONS(request: any) {
+export async function OPTIONS(request: Request) {
 	return NextResponse.json({}, { headers: corsHeaders });
 }
 
@@ -15,7 +15,9 @@ export const POST = async (req: Request) => {
 	const res = await req.json();
 	const { domain, url, event } = res;
 
-	if (!url.include(domain)) {
+	console.log(domain, url, event);
+
+	if (!url.includes(domain)) {
 		return NextResponse.json(
 			{
 				success: false,
@@ -26,16 +28,13 @@ export const POST = async (req: Request) => {
 		);
 	}
 
+	console.log("Event", event === "session_start");
 	if (event === "session_start") {
-		await supabase
-			.from("visits")
-			.insert([
-				{
-					website_id: domain,
-					url,
-				},
-			])
-			.select();
+		await supabase.from("visits").insert([
+			{
+				website_id: domain,
+			},
+		]);
 	}
 
 	if (event === "pageview") {

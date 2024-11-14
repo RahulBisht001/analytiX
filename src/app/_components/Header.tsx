@@ -24,41 +24,39 @@ const Header = () => {
 
     return (
         <>
-            <div className="w-full border-b border-white/5 sticky top-0 bg-black z-50 bg-opacity-20 filter backdrop:blur-lg flex items-center justify-between px-4 sm:px-10 py-4 font-Lexend">
+            <div className="w-full border-b border-white/5 sticky top-0 bg-black z-50 bg-opacity-20 filter backdrop:blur-lg flex items-center justify-between px-4 sm:px-10 py-4 font-outfit">
                 {/* logo of the website */}
-                <h1 className="text-white/80 text-2xl sm:text-3xl tracking-wider">.analytiX</h1>
+                <h1 className="text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend">.analytiX</h1>
 
-                <div className="flex space-x-6">
+                <div className="flex space-x-6 tracking-wider">
                     {pathname !== "/dashboard" && (
-                        <div className="items-center flex space-x-4">
-                            <p className="text-base text-white/60 hover:text-white smooth">snippet</p>
+                        <div className="items-center flex space-x-4 font-light">
+                            <p className="text-base text-white/60 hover:text-white smooth">Snippet</p>
                             <Link
                                 href={"/dashboard"}
                                 prefetch
                                 className="flex items-center justify-center space-x-2 group"
                             >
                                 <button className="text-base text-white/60 group-hover:text-white smooth">
-                                    dashboard
+                                    Dashboard
                                 </button>
 
-                                <ArrowRightIcon className="h-4 w-4 stroke-white/60 group-hover:stroke-white smooth" />
+                                <ArrowRightIcon className="h-4 w-4 stroke-white/60 group-hover:stroke-white smooth transform transition-transform duration-300 group-hover:translate-x-1" />
                             </Link>
                         </div>
                     )}
                     <DropdownMenu>
-                        <DropdownMenuTrigger className="text-white outline-none p-0 m-0 border-none font-Lexend font-normal">
+                        <DropdownMenuTrigger className="text-white outline-none p-0 m-0 border-none font-outfit font-light">
                             <div className="flex space-x-2 items-center justify-center hover:opacity-50">
                                 <p className="text-base">{currentUser?.user_metadata?.full_name.split(" ")[0]}</p>
                                 {currentUser && (
                                     <Image
                                         src={currentUser?.user_metadata?.avatar_url}
-                                        // src={"/images/google.png"}
-                                        alt="User Image"
-                                        width={30}
-                                        height={30}
+                                        alt="user"
+                                        width={35}
+                                        height={35}
                                         aria-label="Profile image of the user"
-                                        className="rounded-full"
-                                        unoptimized={true}
+                                        className="rounded-full border-2 border-gray-500"
                                     />
                                 )}
                             </div>
