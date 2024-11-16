@@ -11,6 +11,10 @@
     var scriptElement = document.currentScript;
     var dataDomain = scriptElement.getAttribute("data-domain");
     var endpoint = "http://localhost:3000/api/track";
+
+    let queryString = location.search;
+    const params = new URLSearchParams(queryString);
+    let utmSource = params.get("utm");
     /**
      * Start calculation of page visits the page visit session will
      * be a window of 10 minutes.which means if some user visits the page/website
@@ -62,13 +66,12 @@
             event: eventName,
             url: location.href,
             domain: dataDomain,
-            // referrer: document.referrer,
-            // website: location.host,
-            // language: navigator.language,
-            // screen: screen.width + "x" + screen.height,
+            source: utmSource || "direct",
+            language: navigator.language,
+            screenSize: screen.width + " x " + screen.height,
+            referrer: document.referrer || "direct",
+            // timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         };
-        console.log(payload);
-
         sendRequest(payload, options);
     }
 
@@ -105,7 +108,6 @@
     }
 
     function trackSessionStart() {
-        console.log("Session Start Trigger");
         trigger("session_start");
     }
     function trackSessionEnd() {
