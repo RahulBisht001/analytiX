@@ -26,7 +26,7 @@ const Header = () => {
         <>
             <div className="w-full border-b border-white/5 sticky top-0 bg-black z-50 bg-opacity-20 filter backdrop:blur-lg flex items-center justify-between px-4 sm:px-10 py-4 font-Outfit">
                 {/* logo of the website */}
-                <h1 className="text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend">.analytiX</h1>
+                <h1 className="text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend font-normal">.dataRoc8</h1>
 
                 <div className="flex space-x-6 tracking-wider">
                     {pathname !== "/dashboard" && (

@@ -32,7 +32,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${outfit.variable} ${poppins.variable} ${lexend.variable} antialiased bg-black`}>
+            <body
+                className={`${outfit.variable} ${poppins.variable} ${lexend.variable} antialiased bg-black text-white`}
+            >
                 {children}
             </body>
         </html>
