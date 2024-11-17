@@ -40,6 +40,10 @@ interface GroupSource_Type {
     source: string;
     visits: number;
 }
+interface GroupedCustomEvent_Type {
+    event_name: string;
+    count: number;
+}
 
 const WebsitePage = () => {
     const [user] = useUser();
@@ -56,7 +60,7 @@ const WebsitePage = () => {
     const [groupedPageSources, setGroupedPageSources] = useState<GroupSource_Type[]>([]);
 
     const [customEvents, setCustomEvents] = useState<CustomEvent_Type[]>([]);
-    const [groupedCustomEvents, setGroupedCustomEvents] = useState([]);
+    const [groupedCustomEvents, setGroupedCustomEvents] = useState<GroupedCustomEvent_Type[]>([]);
     const [activeCustomEventTab, setActiveCustomEventTab] = useState<string>("");
 
     useEffect(() => {
@@ -108,12 +112,26 @@ const WebsitePage = () => {
             setGroupedPageSources(groupPageSources_func(visits ?? []));
             setCustomEvents(customEventsData ?? []);
             // grouping the customEvent by name
-            setGroupedCustomEvents(
-                customEventsData?.reduce((acc, event) => {
-                    acc[event.event_name] = (acc[event.event_name] || 0) + 1;
-                    return acc;
-                }, {})
-            );
+            // setGroupedCustomEvents(
+            //     customEventsData?.reduce((acc, event) => {
+            //         acc[event.event_name] = (acc[event.event_name] || 0) + 1;
+            //         return acc;
+            //     }, {})
+            // );
+            // Group the custom events by event_name and count the occurrences
+            const groupedEvents = customEventsData?.reduce((acc: GroupedCustomEvent_Type[], event) => {
+                if (event.event_name) {
+                    // Check if the event_name already exists in the accumulator
+                    const existingEvent = acc.find((e) => e.event_name === event.event_name);
+                    if (existingEvent) {
+                        existingEvent.count += 1;
+                    } else {
+                        acc.push({event_name: event.event_name, count: 1});
+                    }
+                }
+                return acc;
+            }, []); // Start with an empty array
+            setGroupedCustomEvents(groupedEvents ?? []);
         } catch (error: any) {
             console.log(error.message);
         } finally {
@@ -315,36 +333,38 @@ const WebsitePage = () => {
                                             {groupedCustomEvents && groupedCustomEvents.length > 0 ? (
                                                 <Carousel className="w-full px-4">
                                                     <CarouselContent>
-                                                        {Object.entries(groupedCustomEvents).map(
-                                                            ([eventName, count], index) => (
-                                                                <CarouselItem key={index} className="basis-1/2">
-                                                                    <div
-                                                                        className={`bg-black smooth group hover:border-white/10 text-white text-center border ${
-                                                                            activeCustomEventTab === eventName
-                                                                                ? "border-white/10"
-                                                                                : "border-white/5 cursor-pointer"
-                                                                        } `}
-                                                                        onClick={() =>
-                                                                            setActiveCustomEventTab(eventName)
-                                                                        }
-                                                                    >
-                                                                        <p
-                                                                            className={`text-white/70 font-medium py-8 w-full group-hover:border-white/10 smooth text-center border-b 
+                                                        {groupedCustomEvents.map((grouped_event, index) => (
+                                                            <CarouselItem key={index} className="basis-1/2">
+                                                                <div
+                                                                    className={`bg-black smooth group hover:border-white/10 text-white text-center border ${
+                                                                        activeCustomEventTab ===
+                                                                        grouped_event.event_name
+                                                                            ? "border-white/10"
+                                                                            : "border-white/5 cursor-pointer"
+                                                                    } `}
+                                                                    onClick={() =>
+                                                                        setActiveCustomEventTab(
+                                                                            grouped_event.event_name
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <p
+                                                                        className={`text-white/70 font-medium py-8 w-full group-hover:border-white/10 smooth text-center border-b 
                                                                                 ${
-                                                                                    activeCustomEventTab === eventName
+                                                                                    activeCustomEventTab ===
+                                                                                    grouped_event.event_name
                                                                                         ? "border-white/10"
                                                                                         : "border-white/5 cursor-pointer"
                                                                                 }`}
-                                                                        >
-                                                                            {eventName}
-                                                                        </p>
-                                                                        <p className="py-12 text-3xl lg:text-4xl font-bold bg-[#050505]">
-                                                                            {count}
-                                                                        </p>
-                                                                    </div>
-                                                                </CarouselItem>
-                                                            )
-                                                        )}
+                                                                    >
+                                                                        {grouped_event.event_name}
+                                                                    </p>
+                                                                    <p className="py-12 text-3xl lg:text-4xl font-bold bg-[#050505]">
+                                                                        {grouped_event.count}
+                                                                    </p>
+                                                                </div>
+                                                            </CarouselItem>
+                                                        ))}
                                                     </CarouselContent>
                                                     <CarouselPrevious />
                                                     <CarouselNext />
