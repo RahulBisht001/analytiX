@@ -143,7 +143,7 @@ const SettingsPage = () => {
 
 export default SettingsPage;
 
-export const CodeComponent = () => {
+const CodeComponent = () => {
     let codeString = `
 
     const url = "${process.env.NEXT_PUBLIC_WEBSITE_NAME}/api/events";
