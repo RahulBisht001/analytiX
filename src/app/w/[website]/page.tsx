@@ -7,6 +7,7 @@ import type {User} from "@supabase/supabase-js";
 import {supabase} from "@/config/SUPABASE_CLIENT";
 import Loader from "@/app/_components/Loader";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
 
 interface PageView_Type {
     id: number;
@@ -22,8 +23,21 @@ interface Visit_Type {
     source: string | null;
 }
 
+interface CustomEvent_Type {
+    id: number;
+    created_at: string;
+    event_name: string | null;
+    website_id: string | null;
+    message: string | null;
+}
+
 interface GroupPage_Type {
     page: string;
+    visits: number;
+}
+
+interface GroupSource_Type {
+    source: string;
     visits: number;
 }
 
@@ -34,10 +48,16 @@ const WebsitePage = () => {
     const {website} = useParams();
 
     const [loading, setLoading] = useState<boolean>(true);
+
     const [pageViews, setPageViews] = useState<PageView_Type[]>([]);
     const [groupedPageViews, setGroupedPageViews] = useState<GroupPage_Type[]>([]);
 
     const [totalVisits, setTotalVisits] = useState<Visit_Type[]>([]);
+    const [groupedPageSources, setGroupedPageSources] = useState<GroupSource_Type[]>([]);
+
+    const [customEvents, setCustomEvents] = useState<CustomEvent_Type[]>([]);
+    const [groupedCustomEvents, setGroupedCustomEvents] = useState([]);
+    const [activeCustomEventTab, setActiveCustomEventTab] = useState<string>("");
 
     useEffect(() => {
         if (!currentUser) return;
@@ -72,18 +92,28 @@ const WebsitePage = () => {
         setLoading(true);
 
         try {
-            const [viewsResponse, visitsResponse] = await Promise.all([
+            const [viewsResponse, visitsResponse, customEventResponse] = await Promise.all([
                 supabase.from("page_views").select().eq("domain", website),
                 supabase.from("visits").select().eq("website_id", website),
+                supabase.from("events").select().eq("website_id", website),
             ]);
 
             const views = viewsResponse.data;
             const visits = visitsResponse.data;
+            const customEventsData = customEventResponse.data;
 
             setPageViews(views ?? []);
             setGroupedPageViews(groupPageViews_func(views ?? []));
-
             setTotalVisits(visits ?? []);
+            setGroupedPageSources(groupPageSources_func(visits ?? []));
+            setCustomEvents(customEventsData ?? []);
+            // grouping the customEvent by name
+            setGroupedCustomEvents(
+                customEventsData?.reduce((acc, event) => {
+                    acc[event.event_name] = (acc[event.event_name] || 0) + 1;
+                    return acc;
+                }, {})
+            );
         } catch (error: any) {
             console.log(error.message);
         } finally {
@@ -134,6 +164,23 @@ const WebsitePage = () => {
         return res;
     }
 
+    function groupPageSources_func(visits: Visit_Type[]): GroupSource_Type[] {
+        const groupedPageSources: {[key: string]: number} = {};
+
+        visits.forEach(({source}) => {
+            if (source) {
+                groupedPageSources[source] = (groupedPageSources[source] || 0) + 1;
+            }
+        });
+
+        const res: GroupSource_Type[] = Object.keys(groupedPageSources).map((source) => ({
+            source: source,
+            visits: groupedPageSources[source],
+        }));
+
+        return res;
+    }
+
     /**
      * This abbreviateNumber function will handle the numbers in more flexible and
      * readable way for example if the number is greater than 1000 then it will
@@ -150,6 +197,15 @@ const WebsitePage = () => {
             return (num / 1000000).toFixed(1) + " K";
         }
         return num.toString();
+    }
+
+    function formatTimeStamps(date: string) {
+        // Step 1: create new Date
+        const timestamp = new Date(date);
+
+        // Step 2: Format the Date object into a human-readable format
+        const formattedTimeStamp = timestamp.toLocaleString();
+        return formattedTimeStamp;
     }
 
     return (
@@ -240,27 +296,102 @@ const WebsitePage = () => {
                                                             add ?utm={"{source}"} to track
                                                         </p>
                                                     </h1>
-                                                    {/* {groupedPageSources.map((pageSource) => (
-                                                        <div
-                                                            key={pageSource}
-                                                            className="text-white w-full items-center justify-between 
-                  px-6 py-4 border-b border-white/5 flex"
-                                                        >
-                                                            <p className="text-white/70 font-light">
-                                                                /{pageSource.source}
-                                                            </p>
-                                                            <p className="text-white/70 font-light">
-                                                                <p className="">
-                                                                    {abbreviateNumber(pageSource.visits)}
-                                                                </p>
-                                                            </p>
-                                                        </div>
-                                                    ))} */}
+                                                    {groupedPageSources.map(
+                                                        (pageSource: GroupSource_Type, index: number) => (
+                                                            <div
+                                                                key={index}
+                                                                className="text-white w-full items-center justify-between px-6 py-4 border-b border-white/5 flex"
+                                                            >
+                                                                <p>/{pageSource.source}</p>
+                                                                <p>{abbreviateNumber(pageSource.visits)}</p>
+                                                            </div>
+                                                        )
+                                                    )}
                                                 </div>
                                             </div>
                                         </TabsContent>
+                                        {/* ----------------   Custom Events   ------------------- */}
                                         <TabsContent value="Custom Events" className="w-full">
-                                            Change your password here.
+                                            {groupedCustomEvents && groupedCustomEvents.length > 0 ? (
+                                                <Carousel className="w-full px-4">
+                                                    <CarouselContent>
+                                                        {Object.entries(groupedCustomEvents).map(
+                                                            ([eventName, count], index) => (
+                                                                <CarouselItem key={index} className="basis-1/2">
+                                                                    <div
+                                                                        className={`bg-black smooth group hover:border-white/10 text-white text-center border ${
+                                                                            activeCustomEventTab === eventName
+                                                                                ? "border-white/10"
+                                                                                : "border-white/5 cursor-pointer"
+                                                                        } `}
+                                                                        onClick={() =>
+                                                                            setActiveCustomEventTab(eventName)
+                                                                        }
+                                                                    >
+                                                                        <p
+                                                                            className={`text-white/70 font-medium py-8 w-full group-hover:border-white/10 smooth text-center border-b 
+                                                                                ${
+                                                                                    activeCustomEventTab === eventName
+                                                                                        ? "border-white/10"
+                                                                                        : "border-white/5 cursor-pointer"
+                                                                                }`}
+                                                                        >
+                                                                            {eventName}
+                                                                        </p>
+                                                                        <p className="py-12 text-3xl lg:text-4xl font-bold bg-[#050505]">
+                                                                            {count}
+                                                                        </p>
+                                                                    </div>
+                                                                </CarouselItem>
+                                                            )
+                                                        )}
+                                                    </CarouselContent>
+                                                    <CarouselPrevious />
+                                                    <CarouselNext />
+                                                </Carousel>
+                                            ) : (
+                                                <section className="px-4 flex flex-col justify-center items-center">
+                                                    <p>Oops ! &nbsp; &nbsp;No Custom Events Created</p>
+                                                    <p className="text-sm text-white/40 mt-5">
+                                                        Please check the api docs for creating custom events
+                                                    </p>
+                                                </section>
+                                            )}
+
+                                            {/* -------------  display events with messages ---------- */}
+                                            <div className="items-center justify-center bg-black mt-12 w-full border-y border-white/5 relative">
+                                                {activeCustomEventTab !== "" && (
+                                                    <button
+                                                        className="button absolute right-0 z-50"
+                                                        onClick={() => setActiveCustomEventTab("")}
+                                                    >
+                                                        all
+                                                    </button>
+                                                )}
+                                                <div className="flex flex-col bg-black z-40 h-full w-full">
+                                                    {customEvents
+                                                    .filter((item) =>
+                                                        activeCustomEventTab
+                                                            ? item.event_name === activeCustomEventTab
+                                                            : item
+                                                    )
+                                                    .map((event: CustomEvent_Type) => (
+                                                        <div
+                                                            key={event.id}
+                                                            className={`text-white w-full items-start justify-start px-6 py-12 border-b border-white/5 flex flex-col relative`}
+                                                        >
+                                                            <p className="text-white/70 font-light pb-3">
+                                                                {event.event_name}
+                                                            </p>
+                                                            <p className="">{event.message}</p>
+                                                            <p className="italic absolute right-2 bottom-2 text-xs text-white/50">
+                                                                {formatTimeStamps(event.created_at)}
+                                                                {/* This created_at is the timestamp of the event */}
+                                                            </p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
                                         </TabsContent>
                                     </Tabs>
                                 </div>
