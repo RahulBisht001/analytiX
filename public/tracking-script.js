@@ -10,7 +10,7 @@
     var document = window.document;
     var scriptElement = document.currentScript;
     var dataDomain = scriptElement.getAttribute("data-domain");
-    var endpoint = "http://localhost:3000/api/track";
+    var endpoint = `${process.env.NEXT_PUBLIC_WEBSITE_NAME}/api/track`;
 
     let queryString = location.search;
     const params = new URLSearchParams(queryString);
