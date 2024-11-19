@@ -55,8 +55,6 @@
 		opacity: 0.2;
 		border-radius: 50%;
 		transform: translate(-30%, -30%);
-		/* Adding blur effect to the glow */
-		box-shadow: 0 0 30px 10px rgba(38, 150, 232, 0.6); /* Softer blur */
 	}
 
 	@keyframes colors {
