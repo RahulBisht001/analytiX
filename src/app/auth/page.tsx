@@ -46,7 +46,7 @@ const Auth = () => {
         <>
             <section className="bg-black text-white items-center justify-center flex gap-14 flex-col w-full min-h-screen font-Lexend">
                 <header>
-                    <h1 className="text-3xl">Howdy👋 from dataRoc8</h1>
+                    <h1 className="text-3xl">Howdy👋 from DataRoc8</h1>
                 </header>
 
                 <main>

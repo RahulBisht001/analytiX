@@ -8,6 +8,8 @@ import type {User} from "@supabase/supabase-js";
 import {supabase} from "@/config/SUPABASE_CLIENT";
 import {redirect, usePathname} from "next/navigation";
 
+import appLogo from "../../../public/images/dataroc8.svg";
+
 const Header = () => {
     const [user] = useUser();
     if (user === "no user") return <></>;
@@ -24,14 +26,16 @@ const Header = () => {
 
     return (
         <>
-            <div className="w-full border-b border-white/5 sticky top-0 bg-black z-50 bg-opacity-20 filter backdrop:blur-lg flex items-center justify-between px-4 sm:px-10 py-4 font-Outfit">
+            <div className="w-full border-b border-white/5 sticky top-0 bg-black z-50 flex items-center justify-between px-4 sm:px-10 py-4 font-Outfit">
                 {/* logo of the website */}
-                <h1 className="text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend font-normal">.dataRoc8</h1>
+                <h1 className="hidden sm:block text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend font-normal">
+                    DataRoc8
+                </h1>
+                <Image src={appLogo} alt="DataRoc8 Logo" width={40} height={40} className="block lg:hidden" />
 
-                <div className="flex space-x-6 tracking-wider">
-                    {pathname !== "/dashboard" && (
+                <div className="flex space-x-2 tracking-wider">
+                    {/* {pathname !== "/dashboard" && (
                         <div className="items-center flex space-x-4 font-light">
-                            <p className="text-base text-white/60 hover:text-white smooth">Snippet</p>
                             <Link
                                 href={"/dashboard"}
                                 prefetch
@@ -40,11 +44,9 @@ const Header = () => {
                                 <button className="text-base text-white/60 group-hover:text-white smooth">
                                     Dashboard
                                 </button>
-
-                                <ArrowRightIcon className="h-4 w-4 stroke-white/60 group-hover:stroke-white smooth transform transition-transform duration-300 group-hover:translate-x-1" />
                             </Link>
                         </div>
-                    )}
+                    )} */}
                     <DropdownMenu>
                         <DropdownMenuTrigger className="text-white outline-none p-0 m-0 border-none font-Outfit font-light">
                             <div className="flex space-x-2 items-center justify-center hover:opacity-50">
