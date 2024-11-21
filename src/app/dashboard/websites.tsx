@@ -11,7 +11,7 @@ interface Website {
     user_id: string; // Assuming user_id is also a string
 }
 interface WebsitesProps {
-    currentUserId: string; // ID of the authenticated user
+    currentUserId: string | null; // ID of the authenticated user
 }
 
 const Websites = ({currentUserId}: WebsitesProps) => {
@@ -20,7 +20,7 @@ const Websites = ({currentUserId}: WebsitesProps) => {
 
     useEffect(() => {
         fetchWebsitesOfUser();
-    }, [websites, currentUserId]);
+    }, [currentUserId]);
 
     const fetchWebsitesOfUser = async () => {
         const {data, error} = await supabase
@@ -29,7 +29,6 @@ const Websites = ({currentUserId}: WebsitesProps) => {
         .eq("user_id", currentUserId)
         .order("created_at", {ascending: false});
 
-        // alert(data);
         console.log(data);
 
         if (error) {

@@ -6,16 +6,31 @@ import useUser from "../../hooks/useUser";
 import type {User} from "@supabase/supabase-js";
 import Websites from "./websites";
 import {useEffect} from "react";
+import {useAuth} from "../../hooks/useAuth";
 
 const Dashboard = () => {
-    const [user] = useUser();
-    // Assert that user is of type User
-    const currentUser = user as User;
-    useEffect(() => {
-        if (!user) return;
-        if (user === "no user") redirect("/auth");
-    }, [user]);
+    // const [user] = useUser();
+    // // Assert that user is of type User
+    // const currentUser = user as User;
+    // useEffect(() => {
+    //     if (!user) return;
+    //     if (user === "no user") redirect("/auth");
+    // }, [user]);
 
+    const {user: currentUser, loading} = useAuth();
+
+    if (loading) {
+        return (
+            <div className="w-full min-h-screen flex flex-col items-center justify-center z-40 text-white/90 font-Outfit text-xl xs:text-base tracking-wide">
+                Loading . . . .
+            </div>
+        );
+    }
+
+    if (!currentUser) {
+        redirect("/auth");
+        return null; // Avoid rendering anything after redirection
+    }
     return (
         <>
             <main className="bg-black min-h-screen h-full w-full relative  flex flex-col items-center justify-center font-Outfit font-light tracking-wide">
@@ -28,7 +43,7 @@ const Dashboard = () => {
                             <button className="button">+ add website</button>
                         </Link>
                     </div>
-                    <Websites currentUserId={currentUser.id} />
+                    <Websites currentUserId={currentUser ? currentUser.id : null} />
                 </div>
             </main>
         </>

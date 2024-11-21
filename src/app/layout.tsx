@@ -2,6 +2,7 @@ import type {Metadata} from "next";
 import "./globals.css";
 
 import {Lexend, Poppins, Outfit} from "next/font/google";
+import {UserAuthContextProvider} from "@/context/UserContext";
 const lexend = Lexend({
     subsets: ["latin"],
     weight: ["100", "200", "300", "400", "500", "600", "700"],
@@ -35,7 +36,7 @@ export default function RootLayout({
             <body
                 className={`${outfit.variable} ${poppins.variable} ${lexend.variable} antialiased bg-black text-white`}
             >
-                {children}
+                <UserAuthContextProvider>{children}</UserAuthContextProvider>
             </body>
         </html>
     );

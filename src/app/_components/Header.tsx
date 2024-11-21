@@ -7,12 +7,22 @@ import useUser from "../../hooks/useUser";
 import type {User} from "@supabase/supabase-js";
 import {supabase} from "@/config/SUPABASE_CLIENT";
 import {redirect, usePathname} from "next/navigation";
+import {useAuth} from "@/hooks/useAuth";
 
 const Header = () => {
-    const [user] = useUser();
-    if (user === "no user") return <></>;
-    // Assert that user is of type User
-    const currentUser = user as User;
+    const {user: currentUser, loading} = useAuth();
+
+    if (loading) {
+        return (
+            <div className="w-full min-h-screen flex flex-col items-center justify-center z-40 text-white/90 font-Outfit text-xl xs:text-base tracking-wide">
+                Loading . . . .
+            </div>
+        );
+    }
+    if (!currentUser) {
+        redirect("/auth");
+        return null; // Avoid rendering anything after redirection
+    }
 
     const pathname = usePathname();
 
