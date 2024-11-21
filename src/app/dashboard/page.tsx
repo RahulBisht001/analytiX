@@ -2,21 +2,10 @@
 import {redirect} from "next/navigation";
 import Link from "next/link";
 import Header from "../_components/Header";
-import useUser from "../../hooks/useUser";
-import type {User} from "@supabase/supabase-js";
 import Websites from "./websites";
-import {useEffect} from "react";
 import {useAuth} from "../../hooks/useAuth";
 
 const Dashboard = () => {
-    // const [user] = useUser();
-    // // Assert that user is of type User
-    // const currentUser = user as User;
-    // useEffect(() => {
-    //     if (!user) return;
-    //     if (user === "no user") redirect("/auth");
-    // }, [user]);
-
     const {user: currentUser, loading} = useAuth();
 
     if (loading) {

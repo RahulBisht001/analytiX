@@ -4,7 +4,7 @@ export default function Home() {
     return (
         <>
             <main className="bg-black min-h-svh flex flex-col items-center justify-center font-Outfit">
-                <div className="flex flex-row items-center justify-center absolute top-4 left-4">
+                <div className="flex flex-row items-center justify-center absolute top-4 left-10">
                     <div className="bg-white/80 rounded-md px-1 flex items-center justify-center">
                         <h1 className="text-black text-2xl sm:text-3xl font-bold underline">W</h1>
                     </div>
