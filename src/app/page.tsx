@@ -4,6 +4,15 @@ export default function Home() {
     return (
         <>
             <main className="bg-black min-h-svh flex flex-col items-center justify-center font-Outfit">
+                <div className="flex flex-row items-center justify-center absolute top-4 left-4">
+                    <div className="bg-white/80 rounded-md px-1 flex items-center justify-center">
+                        <h1 className="text-black text-2xl sm:text-3xl font-bold underline">W</h1>
+                    </div>
+                    <h1 className=" text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend font-normal">
+                        {" "}
+                        ebTrack
+                    </h1>
+                </div>
                 {/* <div className="cursor hidden lg:block absolute top-4"></div> */}
                 <div className="max-w-5xl text-center flex flex-col">
                     <h1 className="text-5xl sm:text-8xl font-semibold lg:font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-300 to-neutral-500 inline-block leading-[50px]">

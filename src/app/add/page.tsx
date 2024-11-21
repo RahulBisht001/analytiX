@@ -116,7 +116,7 @@ const AddPage = () => {
         src="${process.env.NEXT_PUBLIC_WEBSITE_NAME}/tracking-script.js">
     </script>
     
-    //  this is the dataRoc8 tracking script for your app.
+    //  this is the WebTrack tracking script for your app.
 
 `;
 
@@ -136,7 +136,7 @@ const AddPage = () => {
 
                 <section className="w-full min-h-screen flex flex-col items-center justify-center">
                     {/* logo of the website */}
-                    <h1 className="text-white/80 text-2xl sm:text-4xl tracking-wider">DataRoc8</h1>
+                    <h1 className="text-white/80 text-2xl sm:text-4xl tracking-wider">WebTrack</h1>
 
                     <div className="flex flex-col items-center justify-center p-12 w-full z-0 border-y border-white/5 bg-black text-white mt-10">
                         {step === 1 ? (

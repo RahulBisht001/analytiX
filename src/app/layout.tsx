@@ -21,7 +21,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-    title: "dataRoc8",
+    title: "WebTrack",
     description: "Get your website analytics in just few clicks",
 };
 

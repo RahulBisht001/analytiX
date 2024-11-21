@@ -10,7 +10,7 @@
     var document = window.document;
     var scriptElement = document.currentScript;
     var dataDomain = scriptElement.getAttribute("data-domain");
-    var endpoint = "https://dataroc8.vercel.app/api/track";
+    var endpoint = "https://webtrack.vercel.app/api/track";
 
     let queryString = location.search;
     const params = new URLSearchParams(queryString);

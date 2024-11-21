@@ -8,8 +8,6 @@ import type {User} from "@supabase/supabase-js";
 import {supabase} from "@/config/SUPABASE_CLIENT";
 import {redirect, usePathname} from "next/navigation";
 
-import appLogo from "../../../public/images/dataroc8.svg";
-
 const Header = () => {
     const [user] = useUser();
     if (user === "no user") return <></>;
@@ -28,10 +26,16 @@ const Header = () => {
         <>
             <div className="w-full border-b border-white/5 sticky top-0 bg-black z-50 flex items-center justify-between px-4 sm:px-10 py-4 font-Outfit">
                 {/* logo of the website */}
-                <h1 className="hidden sm:block text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend font-normal">
-                    DataRoc8
-                </h1>
-                <Image src={appLogo} alt="DataRoc8 Logo" width={40} height={40} className="block lg:hidden" />
+
+                <div className="flex flex-row items-center justify-center">
+                    <div className="bg-white/80 rounded-md px-1 flex items-center justify-center">
+                        <h1 className="text-black text-2xl sm:text-3xl font-bold underline">W</h1>
+                    </div>
+                    <h1 className=" text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend font-normal">
+                        {" "}
+                        ebTrack
+                    </h1>
+                </div>
 
                 <div className="flex space-x-2 tracking-wider">
                     {/* {pathname !== "/dashboard" && (
