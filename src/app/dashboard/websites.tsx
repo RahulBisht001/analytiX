@@ -27,7 +27,8 @@ const Websites = ({currentUserId}: WebsitesProps) => {
         .from("websites")
         .select()
         .eq("user_id", currentUserId)
-        .order("created_at", {ascending: false});
+        .order("created_at", {ascending: false})
+        .range(0, 7); // Fetches records from index 0 to 7 (8 records)
 
         console.log(data);
 
