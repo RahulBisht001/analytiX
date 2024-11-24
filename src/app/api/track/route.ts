@@ -1,4 +1,4 @@
-import { supabase } from "@/config/SUPABASE_CLIENT";
+import { supabase } from "../../../config/SUPABASE_CLIENT";
 import { NextResponse } from "next/server";
 
 const corsHeaders = {

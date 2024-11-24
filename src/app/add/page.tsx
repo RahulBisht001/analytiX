@@ -3,7 +3,7 @@ import {ChangeEvent, useState, useEffect} from "react";
 import {redirect, useRouter} from "next/navigation";
 import useUser from "../../hooks/useUser";
 
-import {supabase} from "@/config/SUPABASE_CLIENT";
+import {supabase} from "../../config/SUPABASE_CLIENT";
 import type {User} from "@supabase/supabase-js";
 
 import SyntaxHighlighter from "react-syntax-highlighter";
@@ -94,7 +94,6 @@ const AddPage = () => {
     };
 
     useEffect(() => {
-        const regex = /^(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z]{2,})+$/;
         if (
             website.trim().includes("www.") ||
             website.trim().includes("http") ||

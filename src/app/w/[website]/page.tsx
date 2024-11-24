@@ -1,13 +1,13 @@
 "use client";
 import {useEffect, useState} from "react";
 import {redirect, useParams} from "next/navigation";
-import Header from "@/app/_components/Header";
-import useUser from "@/hooks/useUser";
+import Header from "../../_components/Header";
+import useUser from "../../../hooks/useUser";
 import type {User} from "@supabase/supabase-js";
-import {supabase} from "@/config/SUPABASE_CLIENT";
-import Loader from "@/app/_components/Loader";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
+import {supabase} from "../../../config/SUPABASE_CLIENT";
+import Loader from "../../_components/Loader";
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "../../../components/ui/tabs";
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "../../../components/ui/carousel";
 
 interface PageView_Type {
     id: number;

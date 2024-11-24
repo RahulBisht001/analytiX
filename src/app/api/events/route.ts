@@ -1,4 +1,4 @@
-import { supabase } from "@/config/SUPABASE_CLIENT";
+import { supabase } from "../../../config/SUPABASE_CLIENT";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 

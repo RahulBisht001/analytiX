@@ -53,7 +53,6 @@ const config: Config = {
 			},
 			fontFamily: {
 				Outfit: ["var(--font-Outfit)"],
-				Poppins: ["var(--font-Poppins)"],
 				Lexend: ["var(--font-Lexend)"],
 			},
 			borderRadius: {

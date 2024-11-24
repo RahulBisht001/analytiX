@@ -9,7 +9,7 @@ import GithubLogo from "../../../public/images/github.png";
 // import {createClient} from "../../utils/supabase/client";
 // import type {User, SupabaseClient} from "@supabase/supabase-js";
 import type {User} from "@supabase/supabase-js";
-import {supabase} from "@/config/SUPABASE_CLIENT";
+import {supabase} from "../../config/SUPABASE_CLIENT";
 
 const Auth = () => {
     // const supabase: SupabaseClient = createClient();

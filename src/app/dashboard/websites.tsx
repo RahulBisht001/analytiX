@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import {useEffect, useState} from "react";
-import {supabase} from "@/config/SUPABASE_CLIENT";
+import {supabase} from "../../config/SUPABASE_CLIENT";
 import {
     Pagination,
     PaginationContent,
@@ -10,8 +10,7 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-} from "@/components/ui/pagination";
-import {Trash} from "lucide-react";
+} from "../../components/ui/pagination";
 
 // Define the interface for the website object
 interface Website {
