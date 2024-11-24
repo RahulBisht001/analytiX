@@ -6,7 +6,7 @@ export default function Home() {
             <main className="bg-black min-h-svh flex flex-col items-center justify-center font-Outfit">
                 <div className="flex flex-row items-center justify-center absolute top-4 left-10">
                     <div className="bg-white/80 rounded-md px-1 flex items-center justify-center">
-                        <h1 className="text-black text-2xl sm:text-3xl font-bold underline">W</h1>
+                        <h1 className="text-black text-2xl sm:text-3xl font-bold">W</h1>
                     </div>
                     <h1 className=" text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend font-normal">
                         {" "}
