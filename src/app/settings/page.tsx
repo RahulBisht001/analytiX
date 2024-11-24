@@ -154,9 +154,8 @@ const SettingsPage = () => {
 export default SettingsPage;
 
 const CodeComponent = () => {
-    let codeString = `
-
-    const url = "${process.env.NEXT_PUBLIC_WEBSITE_NAME}/api/events";
+    const codeString = `
+    const url = "https://webtrack.vercel.app/api/events";
     const headers = {
         "Content-Type": "application/json",
         Authorization: "Bearer {{apiKey}}",
@@ -176,7 +175,6 @@ const CodeComponent = () => {
             console.error("Error:", error);
         });
     };
-
 `;
 
     const [isEventCodeCopied, setEventCodeCopied] = useState<boolean>(false);
