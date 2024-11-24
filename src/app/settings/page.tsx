@@ -1,33 +1,43 @@
 "use client";
 import {useEffect, useState} from "react";
 import {redirect} from "next/navigation";
-import {supabase} from "@/config/SUPABASE_CLIENT";
-import useUser from "@/hooks/useUser";
+import {supabase} from "../../config/SUPABASE_CLIENT";
 import Header from "../_components/Header";
-import type {User} from "@supabase/supabase-js";
 import Loader from "../_components/Loader";
 import {Check, Copy} from "lucide-react";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import {irBlack, sunburst} from "react-syntax-highlighter/dist/esm/styles/hljs";
+import {sunburst} from "react-syntax-highlighter/dist/esm/styles/hljs";
+import {useAuth} from "../../hooks/useAuth";
 
 const SettingsPage = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [APIKey, setAPIKey] = useState<string | null>();
     const [isCopied, setIsCopied] = useState<boolean>(false);
+    const {user: currentUser, loading: userLoading} = useAuth();
 
-    const [user] = useUser();
     useEffect(() => {
-        if (!user) return;
+        if (userLoading) return;
 
-        if (user === "no user") {
-            redirect("/auth");
-        }
-    }, [user]);
-    const currentUser = user as User;
+        // Fetch the API Key when currentUser is available
+        getUserAPIKey();
+    }, [userLoading]);
+
+    if (userLoading) {
+        return (
+            <div className="w-full min-h-screen flex flex-col items-center justify-center z-40 text-white/90 font-Outfit text-xl xs:text-base tracking-wide">
+                Loading Settings . . . .
+            </div>
+        );
+    }
+
+    if (userLoading === false && !currentUser) {
+        redirect("/auth"); // Perform redirect if the user is not logged in
+        return null; // Return null to stop further rendering
+    }
 
     const getUserAPIKey = async () => {
         setLoading(true);
-        const {data, error} = await supabase.from("users").select().eq("user_id", currentUser.id);
+        const {data, error} = await supabase.from("users").select().eq("user_id", currentUser?.id);
 
         if (error) {
             console.log(error.code);
@@ -42,7 +52,7 @@ const SettingsPage = () => {
     };
 
     const handleGenerateAPIKey = async () => {
-        if (loading || !user) {
+        if (loading || !currentUser) {
             return;
         }
 
@@ -63,12 +73,6 @@ const SettingsPage = () => {
         setLoading(false);
     };
 
-    useEffect(() => {
-        if (!user || !supabase) return;
-
-        getUserAPIKey();
-    }, [user, supabase]);
-
     const handleCopyAPIKey = async (): Promise<void> => {
         try {
             if (APIKey) {
@@ -81,9 +85,8 @@ const SettingsPage = () => {
         }
     };
 
-    if (user === "no user") {
+    if (!currentUser) {
         <div>
-            {/* <Header /> */}
             <div className="w-full min-h-screen flex flex-col items-center justify-center z-40 text-white/90 font-Outfit text-xl xs:text-base tracking-wide">
                 Redirecting . . . .
             </div>
@@ -124,7 +127,14 @@ const SettingsPage = () => {
                                     </button>
                                 </div>
 
-                                <input type="text" disabled readOnly value={APIKey} className="input-disabled" />
+                                <input
+                                    type="text"
+                                    disabled
+                                    readOnly
+                                    name="api_key"
+                                    value={APIKey}
+                                    className="input-disabled"
+                                />
                             </div>
 
                             <div className="space-y-4 border-t border-white/5 p-6 bg-black">
