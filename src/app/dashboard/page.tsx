@@ -1,25 +1,9 @@
-"use client";
-import {redirect} from "next/navigation";
 import Link from "next/link";
 import Header from "../_components/Header";
-import Websites from "./websites";
-import {useAuth} from "../../hooks/useAuth";
+import React from "react";
+const Websites = React.lazy(() => import("./websites"));
 
 const Dashboard = () => {
-    const {user: currentUser, loading} = useAuth();
-
-    if (loading) {
-        return (
-            <div className="w-full min-h-screen flex flex-col items-center justify-center z-40 text-white/90 font-Outfit text-xl xs:text-base tracking-wide">
-                Loading . . . .
-            </div>
-        );
-    }
-
-    if (!currentUser) {
-        redirect("/auth");
-        return null; // Avoid rendering anything after redirection
-    }
     return (
         <>
             <main className="bg-black min-h-screen h-full w-full relative  flex flex-col items-center justify-center font-Outfit font-light tracking-wide">
@@ -32,7 +16,9 @@ const Dashboard = () => {
                             <button className="button">+ add website</button>
                         </Link>
                     </div>
-                    <Websites currentUserId={currentUser ? currentUser.id : null} />
+                    {/* <Websites currentUserId={currentUser ? currentUser.id : null} /> */}
+
+                    <Websites />
                 </div>
             </main>
         </>

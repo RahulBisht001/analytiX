@@ -11,6 +11,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "../../components/ui/pagination";
+import {useAuth} from "../../hooks/useAuth";
 
 // Define the interface for the website object
 interface Website {
@@ -23,22 +24,24 @@ interface WebsitesProps {
     currentUserId: string | null; // ID of the authenticated user
 }
 
-const Websites = ({currentUserId}: WebsitesProps) => {
+const Websites = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [websites, setWebsites] = useState<Website[]>([]);
     const [page, setPage] = useState<number>(1);
     const pageSize = 8;
+    const {user: currentUser, loading: userLoading} = useAuth();
 
     useEffect(() => {
+        if (userLoading) return;
         fetchWebsitesOfUser();
-    }, [currentUserId, page]);
+    }, [currentUser, page]);
 
     const fetchWebsitesOfUser = async () => {
         console.log("Hii");
         const {data, error} = await supabase
         .from("websites")
         .select()
-        .eq("user_id", currentUserId)
+        .eq("user_id", currentUser?.id)
         .order("created_at", {ascending: false})
         .range((page - 1) * pageSize, page * pageSize - 1); // Fetches records from index 0 to 7 (8 records)
 
@@ -87,10 +90,7 @@ const Websites = ({currentUserId}: WebsitesProps) => {
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-10 p-6 z-40">
                 {/* Map all the websites here */}
-                {loading ? (
-                    <p className="text-white text-center">Wait while we fetch the data</p>
-                ) : (
-                    websites &&
+                {websites.length > 0 &&
                     websites.map((website: any, index: Number) => {
                         return (
                             <Link href={`/w/${website?.website_name}`} key={website.id + "#"}>
@@ -113,53 +113,54 @@ const Websites = ({currentUserId}: WebsitesProps) => {
                                 </div>
                             </Link>
                         );
-                    })
+                    })}
+
+                {/* Pagination Controls */}
+
+                {websites.length > 0 && (
+                    <Pagination>
+                        <PaginationContent>
+                            <PaginationItem>
+                                <PaginationPrevious
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        if (page > 1) setPage(page - 1); // Go to previous page
+                                    }}
+                                />
+                            </PaginationItem>
+
+                            <PaginationItem>
+                                <PaginationLink
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setPage(1); // Jump to first page
+                                    }}
+                                >
+                                    1
+                                </PaginationLink>
+                            </PaginationItem>
+
+                            <PaginationItem>
+                                <PaginationEllipsis />
+                            </PaginationItem>
+
+                            <PaginationItem>
+                                <PaginationNext
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        if (websites.length === pageSize) {
+                                            setPage(page + 1); // Go to next page
+                                        }
+                                    }}
+                                />
+                            </PaginationItem>
+                        </PaginationContent>
+                    </Pagination>
                 )}
             </div>
-
-            {/* Pagination Controls */}
-            <Pagination>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                if (page > 1) setPage(page - 1); // Go to previous page
-                            }}
-                        />
-                    </PaginationItem>
-
-                    {/* Page Number Links (Dynamic page numbers) */}
-                    <PaginationItem>
-                        <PaginationLink
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                setPage(1); // Jump to first page
-                            }}
-                        >
-                            1
-                        </PaginationLink>
-                    </PaginationItem>
-
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
-
-                    <PaginationItem>
-                        <PaginationNext
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                if (websites.length === pageSize) {
-                                    setPage(page + 1); // Go to next page
-                                }
-                            }}
-                        />
-                    </PaginationItem>
-                </PaginationContent>
-            </Pagination>
         </>
     );
 };

@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "../../components/ui/dropdown-menu";
@@ -5,9 +6,15 @@ import {DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator} from "@radix
 import {supabase} from "../../config/SUPABASE_CLIENT";
 import {redirect, usePathname} from "next/navigation";
 import {useAuth} from "../../hooks/useAuth";
+import {useEffect} from "react";
+import Logo from "./Logo";
 
 const Header = () => {
     const {user: currentUser, loading} = useAuth();
+
+    useEffect(() => {
+        if (loading) return;
+    }, [loading]);
 
     if (loading) {
         return (
@@ -16,12 +23,15 @@ const Header = () => {
             </div>
         );
     }
-    if (!currentUser) {
-        redirect("/auth");
-        return null; // Avoid rendering anything after redirection
+    // if (!currentUser) {
+    //     redirect("/auth");
+    //     return null; // Avoid rendering anything after redirection
+    // }
+    if (loading === false && !currentUser) {
+        redirect("/auth"); // Perform redirect if the user is not logged in
+        return null; // Return null to stop further rendering
     }
-
-    const pathname = usePathname();
+    // const pathname = usePathname();
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
@@ -34,30 +44,9 @@ const Header = () => {
             <div className="w-full border-b border-white/5 sticky top-0 bg-black z-50 flex items-center justify-between px-4 sm:px-10 py-4 font-Outfit">
                 {/* logo of the website */}
 
-                <div className="flex flex-row items-center justify-center">
-                    <h1 className="text-black text-2xl sm:text-3xl font-bold px-[3px] py-0 rounded-md bg-white/80 m-0 font-Lexend">
-                        W
-                    </h1>
-                    <h1 className=" text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend font-normal">
-                        {" "}
-                        ebTrack
-                    </h1>
-                </div>
+                <Logo />
 
                 <div className="flex space-x-2 tracking-wider">
-                    {/* {pathname !== "/dashboard" && (
-                        <div className="items-center flex space-x-4 font-light">
-                            <Link
-                                href={"/dashboard"}
-                                prefetch
-                                className="flex items-center justify-center space-x-2 group"
-                            >
-                                <button className="text-base text-white/60 group-hover:text-white smooth">
-                                    Dashboard
-                                </button>
-                            </Link>
-                        </div>
-                    )} */}
                     <DropdownMenu>
                         <DropdownMenuTrigger className="text-white outline-none p-0 m-0 border-none font-Outfit font-light">
                             <div className="flex space-x-2 items-center justify-center hover:opacity-50">
