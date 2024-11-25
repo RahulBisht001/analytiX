@@ -23,15 +23,11 @@ const Header = () => {
             </div>
         );
     }
-    // if (!currentUser) {
-    //     redirect("/auth");
-    //     return null; // Avoid rendering anything after redirection
-    // }
+
     if (loading === false && !currentUser) {
         redirect("/auth"); // Perform redirect if the user is not logged in
         return null; // Return null to stop further rendering
     }
-    // const pathname = usePathname();
 
     const handleLogout = async () => {
         await supabase.auth.signOut();

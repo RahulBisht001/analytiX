@@ -30,6 +30,9 @@ const Auth = () => {
             provider: "google",
             options: {
                 redirectTo: `${location.origin}/auth/callback`,
+                queryParams: {
+                    prompt: "select_account", // Forces Google to show the account selection screen
+                },
             },
         });
     };
