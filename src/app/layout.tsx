@@ -40,7 +40,7 @@ export const metadata: Metadata = {
         url: "https://webtrack.vercel.app", // Replace with your actual URL
         images: [
             {
-                url: "https://asset.cloudinary.com/dthrirmoj/4dbc3150d1341d7b340d11ba7aa7decd",
+                url: "https://asset.cloudinary.com/dthrirmoj/c65230beecd18de534792a3955830050",
                 width: 1200,
                 height: 630,
                 alt: "WebTrack Preview Image",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
         title: "WebTrack - Website Analytics Tool",
         description:
             "Track your website's performance and insights with WebTrack. Get detailed analytics, user behavior reports, and traffic analysis in just a few clicks.",
-        images: ["https://asset.cloudinary.com/dthrirmoj/4dbc3150d1341d7b340d11ba7aa7decd"],
+        images: ["https://asset.cloudinary.com/dthrirmoj/c65230beecd18de534792a3955830050"],
         creator: "@Twts_RahulB",
     },
     icons: {
