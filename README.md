@@ -1,4 +1,4 @@
-# WebTrack
+<img src="./public/images/logo.svg" alt="WebTrack logo"/>
 
 ## Table of Contents
 - [Tech Stack](#tech-stack)

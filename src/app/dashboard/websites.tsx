@@ -114,53 +114,52 @@ const Websites = () => {
                             </Link>
                         );
                     })}
-
-                {/* Pagination Controls */}
-
-                {websites.length > 0 && (
-                    <Pagination>
-                        <PaginationContent>
-                            <PaginationItem>
-                                <PaginationPrevious
-                                    href="#"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        if (page > 1) setPage(page - 1); // Go to previous page
-                                    }}
-                                />
-                            </PaginationItem>
-
-                            <PaginationItem>
-                                <PaginationLink
-                                    href="#"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setPage(1); // Jump to first page
-                                    }}
-                                >
-                                    1
-                                </PaginationLink>
-                            </PaginationItem>
-
-                            <PaginationItem>
-                                <PaginationEllipsis />
-                            </PaginationItem>
-
-                            <PaginationItem>
-                                <PaginationNext
-                                    href="#"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        if (websites.length === pageSize) {
-                                            setPage(page + 1); // Go to next page
-                                        }
-                                    }}
-                                />
-                            </PaginationItem>
-                        </PaginationContent>
-                    </Pagination>
-                )}
             </div>
+            {/* Pagination Controls */}
+
+            {websites.length > 0 && (
+                <Pagination>
+                    <PaginationContent>
+                        <PaginationItem>
+                            <PaginationPrevious
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    if (page > 1) setPage(page - 1); // Go to previous page
+                                }}
+                            />
+                        </PaginationItem>
+
+                        <PaginationItem>
+                            <PaginationLink
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setPage(1); // Jump to first page
+                                }}
+                            >
+                                1
+                            </PaginationLink>
+                        </PaginationItem>
+
+                        <PaginationItem>
+                            <PaginationEllipsis />
+                        </PaginationItem>
+
+                        <PaginationItem>
+                            <PaginationNext
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    if (websites.length === pageSize) {
+                                        setPage(page + 1); // Go to next page
+                                    }
+                                }}
+                            />
+                        </PaginationItem>
+                    </PaginationContent>
+                </Pagination>
+            )}
         </>
     );
 };

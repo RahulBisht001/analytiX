@@ -1,17 +1,12 @@
 import Link from "next/link";
+import Logo from "./_components/Logo";
 
 export default function Home() {
     return (
         <>
             <main className="bg-black min-h-svh flex flex-col items-center justify-center font-Outfit">
-                <div className="flex flex-row items-center justify-center absolute top-4 left-6">
-                    <h1 className="text-black text-2xl sm:text-3xl font-bold px-[3px] py-0 rounded-md bg-white/80 m-0 font-Lexend">
-                        W
-                    </h1>
-                    <h1 className=" text-white/80 text-2xl sm:text-3xl tracking-wider font-Lexend font-normal">
-                        {" "}
-                        ebTrack
-                    </h1>
+                <div className="absolute left-4 sm:left-10 top-4">
+                    <Logo />
                 </div>
                 {/* <div className="cursor hidden lg:block absolute top-4"></div> */}
                 <div className="max-w-5xl text-center flex flex-col">
